@@ -48,6 +48,6 @@ class FirestoreService {
   }) {
     final reference = FirebaseFirestore.instance.doc(path);
     final snapshots = reference.snapshots();
-    return snapshots.map((snapshot) => builder(snapshot.data()!, snapshot.id));
+    return snapshots.map((snapshot) => builder(snapshot.data() as Map<String, dynamic>, snapshot.id));
   }
 }

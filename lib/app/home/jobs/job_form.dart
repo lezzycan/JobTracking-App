@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:time_tracker/app/home/models/jobs.dart';
 import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
 
@@ -12,16 +11,19 @@ class JobFormPage extends StatefulWidget {
 
   final Database database;
  final Job? job;
-  static Future<void> show(BuildContext context, { Database? database, Job? job}  ) async {
+  static Future<void> show(BuildContext context, { Database? database, Job? job, icon}  ) async {
     //final database = Provider.of<Database>(context, listen: false);
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => JobFormPage(
-                  database: database!,
-                  job: job,
-                ),
-            fullscreenDialog: true));
+    // await Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => JobFormPage(
+    //               database: database!,
+    //               job: job,
+    //             ),
+    //         fullscreenDialog: true, ));
+    await Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+        builder: (context) => JobFormPage(
+            database:database!, job:job),fullscreenDialog: true));
   }
 
   @override
@@ -84,7 +86,7 @@ class _JobFormPageState extends State<JobFormPage> {
         } else {
           final id = widget.job?.id ?? documentIDCurrentDate();
           await widget.database
-              .setJob(Job(name: _name, ratePerHour: _ratePerHour, id: id));
+              .setJob(Job(name: _name!, ratePerHour: _ratePerHour, id: id));
           Navigator.pop (context, true);
         }
       } on FirebaseException catch (e) {

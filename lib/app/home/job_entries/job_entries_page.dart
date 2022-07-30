@@ -42,37 +42,38 @@ class JobEntriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Job>(
-      stream: database.jobStream(jobId: job.id),
-      builder: (BuildContext context, AsyncSnapshot<Job> snapshot) {
-        final job = snapshot.data;
-        final jobName = job?.name ?? '';
-        return Scaffold(
-          appBar: AppBar(
-            elevation: 2.0,
-            title: Text(jobName),
-            centerTitle: true,
-            actions: <Widget>[
-              TextButton(
-                child: const Text(
-                  'Edit',
-                  style: TextStyle(fontSize: 18.0, color: Colors.white),
-                ),
-                onPressed: () =>
-                    JobFormPage.show(context, database: database, job: job),
-              ),
-            ],
-          ),
-          body: _buildContent(context, job!),
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () =>
-                EntryPage.show(context: context, database: database, job: job,),
-          ),
-        );
+    return StreamBuilder<Job?>(
+        stream: database.jobStream(jobId: job.id),
+        builder: (BuildContext context, snapshot) {
+          final job = snapshot.data ;
+          final jobName = job?.name;
 
-      }
-    );
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 2.0,
+              title: Text(jobName!),
+              centerTitle: true,
+              actions: <Widget>[
+                IconButton(
+                    onPressed: () => EntryPage.show(
+                          context: context,
+                          database: database,
+                          job: job as Job,
+                        ),
+                    icon: const Icon(Icons.add)),
+                TextButton(
+                  child: const Text(
+                    'Edit',
+                    style: TextStyle(fontSize: 18.0, color: Colors.white),
+                  ),
+                  onPressed: () =>
+                      JobFormPage.show(context, database: database, job: job),
+                ),
+              ],
+            ),
+            body: _buildContent(context, job!),
+          );
+        });
   }
 
   Widget _buildContent(BuildContext context, Job job) {

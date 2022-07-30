@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/app/sign_in/email_sign_in_page.dart';
 import 'package:time_tracker/app/sign_in/sign_in_bloc.dart';
-import 'package:time_tracker/app/sign_in/social_signin_button.dart';
+import 'package:time_tracker/custom_button_row/social_signin_button.dart';
 import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
 import 'package:time_tracker/custom_button_row/sign_in_buttons.dart';
 import 'package:time_tracker/constants.dart';

@@ -10,7 +10,7 @@ class JobListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(job.name!),
+      title: Text(job.name),
       trailing: const Icon(Icons.chevron_right),
       onTap: onPressed,
     );

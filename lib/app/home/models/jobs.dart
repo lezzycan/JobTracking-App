@@ -1,6 +1,6 @@
 class Job {
   Job({required this.name, required this.ratePerHour, required this.id});
-  final String? name;
+  final String name;
   final int? ratePerHour;
   final String id;
 

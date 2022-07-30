@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/app/home/job_entries/job_entries_page.dart';
@@ -17,27 +16,6 @@ class JobsPage extends StatelessWidget {
 
   const JobsPage({Key? key}) : super(key: key);
 
-  Future<void> _signOut(context) async {
-    try {
-      final authbase = Provider.of<AuthBase>(context, listen: false);
-      await authbase.signOut();
-    } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-    }
-  }
-
-  Future<void> confirmSignOut(BuildContext context) async {
-    final didSignOutRequest = await showAlertDialog(context,
-        title: 'Logout',
-        content: 'Are you sure that you want to logout?',
-        defaultActionText: 'Logout',
-        cancelActionText: 'Cancel');
-    if (didSignOutRequest == true) {
-      _signOut(context);
-    }
-  }
 
   Future<void> _deleteContent(BuildContext context, Job job) async {
     try {
@@ -57,25 +35,15 @@ class JobsPage extends StatelessWidget {
         backgroundColor: Colors.green[900],
         centerTitle: true,
         actions: [
-          TextButton(
-              onPressed: () => confirmSignOut(context),
-              child: const Text(
-                'Logout',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ))
+          IconButton(
+              onPressed: () => JobFormPage.show(context,
+              database: Provider.of<Database>(context, listen: false),),
+              icon: const Icon(Icons.add)),
+
         ],
       ),
       body: _buildContent(context),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
-        // onPressed: () => _createJobs(context),
 
-        onPressed: () => JobFormPage.show(context,
-            database: Provider.of<Database>(context, listen: false)),
-        child: const Icon(
-          Icons.add,
-        ),
-      ),
     );
   }
 

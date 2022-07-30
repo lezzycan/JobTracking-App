@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-
 import '../../../common_widgets/platform_exception_alert_dialog.dart';
 import '../../../services/database.dart';
 import '../models/jobs.dart';
@@ -10,20 +9,19 @@ import '../../../common_widgets/date_time_picker.dart';
 import 'format.dart';
 
 class EntryPage extends StatefulWidget {
-  const EntryPage({required this.database, required this.job,  this.entry});
+   EntryPage({required this.database, required this.job, this.entry});
   final Database database;
   final Job job;
   final Entry? entry;
 
   static Future<void> show(
-      {required BuildContext context, required Database database, required Job job,  Entry? entry}) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) =>
-            EntryPage(database: database, job: job, entry: entry),
-        fullscreenDialog: true,
-      ),
-    );
+      {required BuildContext context,
+      required Database database,
+      required Job job,
+      Entry? entry}) async {
+    await Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+        builder: (context) => EntryPage(database: database, job: job),
+        fullscreenDialog: true));
   }
 
   @override
@@ -85,12 +83,12 @@ class _EntryPageState extends State<EntryPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 2.0,
-        title: Text(widget.job.name!),
+        title: Text(widget.job.name),
         actions: <Widget>[
           TextButton(
             child: Text(
               widget.entry != null ? 'Update' : 'Create',
-              style: TextStyle(fontSize: 18.0, color: Colors.white),
+              style: const TextStyle(fontSize: 18.0, color: Colors.white),
             ),
             onPressed: () => _setEntryAndDismiss(context),
           )
@@ -122,7 +120,8 @@ class _EntryPageState extends State<EntryPage> {
       selectedDate: _startDate,
       selectedTime: _startTime,
       selectDate: (date) => setState(() => _startDate = date),
-      selectTime: (time) => setState(() => _startTime = time), key: null,
+      selectTime: (time) => setState(() => _startTime = time),
+      key: null,
     );
   }
 
@@ -132,7 +131,8 @@ class _EntryPageState extends State<EntryPage> {
       selectedDate: _endDate,
       selectedTime: _endTime,
       selectDate: (date) => setState(() => _endDate = date),
-      selectTime: (time) => setState(() => _endTime = time), key: null,
+      selectTime: (time) => setState(() => _endTime = time),
+      key: null,
     );
   }
 
