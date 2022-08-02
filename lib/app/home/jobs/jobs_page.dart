@@ -6,9 +6,7 @@ import 'package:time_tracker/app/home/jobs/job_list_tile.dart';
 import 'package:time_tracker/app/home/jobs/list_items_builder.dart';
 import 'package:time_tracker/app/home/models/jobs.dart';
 import 'package:time_tracker/app/home/jobs/job_form.dart';
-import 'package:time_tracker/common_widgets/platform_alert_dialog.dart';
 import 'package:time_tracker/common_widgets/platform_exception_alert_dialog.dart';
-import '../../../services/auth.dart';
 import '../../../services/database.dart';
 
 class JobsPage extends StatelessWidget {
