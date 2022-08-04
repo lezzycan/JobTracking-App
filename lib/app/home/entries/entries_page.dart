@@ -38,7 +38,7 @@ class EntriesPage extends StatelessWidget {
         if(snapshot.hasData){ return ListItemBuilder<EntriesListTileModel>(
           snapshot: snapshot,
           itemBuilder: (context, model) => EntriesListTile(model: model),
-        );}
+        );} 
         return Container(
          alignment: Alignment.center,
          child: const Text('fuck!'),);

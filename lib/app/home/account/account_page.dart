@@ -1,17 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracker/common_widgets/avatar.dart';
 
 import '../../../common_widgets/platform_alert_dialog.dart';
-import '../../../common_widgets/platform_exception_alert_dialog.dart';
 import '../../../services/auth.dart';
-import '../../../services/database.dart';
-import '../job_entries/job_entries_page.dart';
-import '../jobs/job_list_tile.dart';
-import '../jobs/list_items_builder.dart';
-import '../models/jobs.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -36,17 +30,9 @@ class AccountPage extends StatelessWidget {
     }
   }
 
-  Future<void> _deleteContent(BuildContext context, Job job) async {
-    try {
-      final database = Provider.of<Database>(context, listen: false);
-      await database.deleteJob(job);
-    } on FirebaseException catch (e) {
-      showExceptionAlertDialog(context,
-          title: 'Operation Failed', exception: e);
-    }
-  }
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthBase>(context, listen:false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Accounts'),
@@ -60,11 +46,30 @@ class AccountPage extends StatelessWidget {
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ))
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(130),
+          child: _buildUserProfile( auth.user)),
       ),
 
 
     );
   }
+
+ Widget  _buildUserProfile(  User? user) {
+  return Column(
+    children: [
+      Avatar(
+        photoUrl: user?.photoURL, 
+        radius: 50,color: Colors.black54,),
+       const SizedBox(height: 8.0,),
+        if(user?.displayName !=null)
+        Text(user!.displayName!,style: const TextStyle(color: Colors.white),),
+        const SizedBox(
+          height: 8.0,
+        ),
+    ],
+  );
+ }
 
 
 }
